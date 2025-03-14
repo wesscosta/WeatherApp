@@ -1,48 +1,58 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React from "react";
+import {ScrollView, Text} from "react-native";
+import CardReceita from "../../components/CardReceita";
+import styles from "./style";
 
 export default function ReceitasScreen({ navigation }) {
   const receitas = [
-    { id: 1, nome: 'Bolo de Chocolate', ingredientes: 'Farinha, Ovos, Chocolate...', preparo: 'Misture tudo e asse por 40min.' },
-    { id: 2, nome: 'Panqueca', ingredientes: 'Farinha, Leite, Ovos...', preparo: 'Misture tudo e frite em uma frigideira.' },
-    { id: 3, nome: 'Brigadeiro', ingredientes: 'Leite Condensado, Chocolate, Manteiga...', preparo: 'Cozinhe até engrossar e enrole.' },
+    {
+      id: 1,
+      titulo: "Bolo de Chocolate",
+      Categoria: "Sobremesa",
+      descricao: "Um delicioso bolo de chocolate fofinho e úmido.",
+      ingredientes: "Farinha, Ovos, Chocolate...",
+      preparo: "Misture tudo e asse por 40min.",
+      imagem:require("../../assets/rec-bolo-chocolocate.jpg"),
+    },
+    {
+      id: 2,
+      titulo: "Panqueca",
+      Categoria: "Sobremesa",
+      descricao: "Um delicioso bolo de chocolate fofinho e úmido.",
+      ingredientes: "Farinha, Leite, Ovos...",
+      preparo: "Misture tudo e frite em uma frigideira.",
+      imagem:require("../../assets/rec-panqueca.jpg"),
+    },
+    {
+      id: 3,
+      titulo: "Brigadeiro",
+      Categoria: "Doces",
+      descricao: "Um delicioso bolo de chocolate fofinho e úmido.",
+      ingredientes: "Leite Condensado, Chocolate, Manteiga...",
+      preparo: "Cozinhe até engrossar e enrole.",
+      imagem:require("../../assets/rec-brigadeiro.jpg"),
+    },
+    {
+      id: 4,
+      titulo: "Salada de Folhas",
+      descricao: "Um delicioso bolo de chocolate fofinho e úmido.",
+      ingredientes: "Leite Condensado, Chocolate, Manteiga...",
+      preparo: "Cozinhe até engrossar e enrole.",
+      imagem:require("../../assets/rec-salada.jpg"),
+    },
   ];
+  const handleVerReceita = (receita) => {
+    console.log("Abrindo receita:", receita.titulo);
+    
+  };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>🍽 Lista de Receitas</Text>
       {receitas.map((receita) => (
-        <View key={receita.id} style={styles.card}>
-          <Text style={styles.recipeName}>{receita.nome}</Text>
-          <Button
-            title="Ver Detalhes"
-            onPress={() => navigation.navigate('Detalhes', receita)}
-          />
-        </View>
+              <CardReceita receita={receita} onVerReceita={handleVerReceita} navigation={navigation}/>
       ))}
-    </View>
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  card: {
-    backgroundColor: '#f8f8f8',
-    padding: 15,
-    marginVertical: 10,
-    borderRadius: 10,
-  },
-  recipeName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});

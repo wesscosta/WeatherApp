@@ -1,16 +1,15 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-export default CardReceita = ({ receita, onVerReceita }) => {
+export default CardReceita = ({ receita, onVerReceita, navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={receita.imagem} style={styles.imagem} />
       <View style={styles.infoContainer}>
         <Text style={styles.titulo}>{receita.titulo}</Text>
-        <Text style={styles.descricao} numberOfLines={2}>
-          {receita.descricao}
-        </Text>
-        <TouchableOpacity style={styles.botao} onPress={() => onVerReceita(receita)}>
+        <Text style={styles.descricao} numberOfLines={2}>{receita.ingredientes}</Text>
+
+        <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate("Detalhes", receita)}>
           <Text style={styles.botaoTexto}>Ver Receita</Text>
         </TouchableOpacity>
       </View>
