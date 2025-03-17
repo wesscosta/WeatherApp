@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View, Text, TouchableOpacity, SafeAreaView,ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import InfinityGallery from "../../components/InfinityGallery";
 import ReceitaDoDia from "../../components/ReceitaDoDia";
 import Categorias from "../../components/Categorias";
 import LogoVovo from "../../assets/vovo.svg";
+import { useReceitas } from "../../context/ReceitasContext"; // Importando o contexto
 import styles from "./style";
 
-const receita = {
-  titulo: "Bolo de Chocolate",
-  descricao: "Um delicioso bolo de chocolate fofinho e úmido.",
-  imagem: require("../../assets/rec-bolo-chocolocate.jpg"),
-};
 
 export default function HomeScreen({ navigation }) {
+  const { receitas } = useReceitas(); // Obtendo as receitas do contexto
+  const receita = useMemo(() => {
+    if (receitas.length === 0) return null; // Se não houver receitas, retorna null
+    return receitas[Math.floor(Math.random() * receitas.length)];
+  }, [receitas]); // Atualiza sempre que `receitas` mudar
+  
   const handleVerReceita = (receita) => {
     console.log("Abrindo receita:", receita.titulo);
   };
@@ -30,7 +32,7 @@ export default function HomeScreen({ navigation }) {
         <InfinityGallery />
         <View>
           <Text style={styles.h3}>Receita do Dia</Text>
-          <ReceitaDoDia receita={receita} onVerReceita={handleVerReceita} />
+          <ReceitaDoDia receita={receita} onVerReceita={handleVerReceita} navigation={navigation}/>
         </View>
         <View>
           <Text style={styles.h3}>Categorias do Dia</Text>

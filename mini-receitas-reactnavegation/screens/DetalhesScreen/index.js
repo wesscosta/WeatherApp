@@ -1,38 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { Image, Text, Button, ScrollView } from 'react-native';
+import styles from "./style";
 
 export default function DetalhesScreen({ route, navigation }) {
-  const { nome, ingredientes, preparo } = route.params;
+  const { titulo, categoria, descricao, ingredientes, preparo, imagem } = route.params;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{nome}</Text>
+    <ScrollView style={styles.container}>
+      <Image style={styles.imagem} source={imagem}/>
+      <Text style={styles.title}>{titulo}</Text>
+      <Text style={styles.category}>{categoria}</Text>
+      <Text style={styles.description}>{descricao}</Text>
       <Text style={styles.subtitle}>Ingredientes:</Text>
       <Text style={styles.text}>{ingredientes}</Text>
       <Text style={styles.subtitle}>Modo de Preparo:</Text>
       <Text style={styles.text}>{preparo}</Text>
       <Button title="Voltar" onPress={() => navigation.goBack()} />
-    </View>
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginTop: 15,
-  },
-  text: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-});

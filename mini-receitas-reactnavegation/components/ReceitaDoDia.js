@@ -1,11 +1,12 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-export default ReceitaDoDia = ({ receita, onVerReceita }) => {
+export default ReceitaDoDia = ({ receita, navigation}) => {
+
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => onVerReceita(receita)}
+      onPress={() => navigation.navigate("Detalhes", receita)}
     >
       <Image source={receita.imagem} style={styles.imagem} />
       <View style={styles.infoContainer}>
@@ -28,11 +29,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "95%",
     justifyContent:'center',
-    margin:'auto'
+    margin:'auto',
+    justifyContent:"flex-start",
   },
   imagem: {
+    right:0,
     marginLeft: 10,
-    width: 100,
+    width: 120,
     height: 100,
     resizeMode: "cover",
   },

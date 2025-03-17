@@ -41,6 +41,15 @@ const receitasIniciais = [
     preparo: "Misture os ingredientes e tempere a gosto.",
     imagem: require("../assets/rec-salada.jpg"),
   },
+  {
+    id: 5,
+    titulo: "Salada de Folhas",
+    categoria: "Tortas",
+    descricao: "Uma opção leve e saudável.",
+    ingredientes: "Alface, Rúcula, Agrião...",
+    preparo: "Misture os ingredientes e tempere a gosto.",
+    imagem: require("../assets/rec-salada.jpg"),
+  },
 ];
 
 // Criando o Provider para fornecer os dados globalmente

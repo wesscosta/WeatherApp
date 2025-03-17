@@ -1,33 +1,63 @@
 import React from "react";
-import { FlatList,Text, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import IconPanela from "../assets/icon_panela.svg";
+import { useReceitas } from "../context/ReceitasContext"; // Importando o contexto
 
-const photos = Array.from({ length:4 }, (_, index) => `Categoria ${index + 1}`);
+export default function Categorias({ modoLista = false }) {
+  const { receitas } = useReceitas(); // Pegando receitas do contexto
 
-export default Categorias = () => {
-  return (
-    <FlatList
-      data={photos}
-      keyExtractor={(item, index) => index.toString()}
-      numColumns={2} // Define o número de colunasF
-      contentContainerStyle={styles.container}
-      renderItem={({ item }) => (
-        <TouchableOpacity style={styles.photoContainer}>
-          <Text style={styles.photoText}><IconPanela width={30} height={30}  /></Text>
-          <Text style={styles.photoText}>{item}</Text>
-        </TouchableOpacity>
-      )}
-    />
+  // Extraindo categorias únicas
+  const categorias = [...new Set(receitas.map((r) => r.categoria))];
+
+  return modoLista ? (
+    <CategoriaLista categorias={categorias} />
+  ) : (
+    <CategoriaCard categorias={categorias} />
   );
+}
+
+// Componente para exibir categorias como Cards (Grade)
+const CategoriaCard = ({ categorias }) => (
+  <FlatList
+    data={categorias}
+    keyExtractor={(item) => item}
+    numColumns={2} // Exibe duas colunas
+    contentContainerStyle={styles.container}
+    renderItem={({ item }) => (
+      <TouchableOpacity style={[styles.photoContainer, { backgroundColor: getRandomColor(item) }]}>
+        <IconPanela width={30} height={30} />
+        <Text style={styles.photoText}>{item}</Text>
+      </TouchableOpacity>
+    )}
+  />
+);
+
+// Componente para exibir categorias como Lista Vertical
+const CategoriaLista = ({ categorias }) => (
+  <FlatList
+    data={categorias}
+    keyExtractor={(item) => item}
+    renderItem={({ item }) => (
+      <View style={styles.listItem}>
+        <IconPanela width={20} height={20} />
+        <Text style={styles.listText}>{item}</Text>
+      </View>
+    )}
+  />
+);
+
+// Função para gerar uma cor única baseada no nome da categoria
+const getRandomColor = (categoria) => {
+  return `rgba(255, 99, 71, 0.5)`;
 };
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 10,
   },
   photoContainer: {
     flex: 1,
     height: 100,
-    backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     justifyContent: "center",
     alignItems: "center",
     margin: 8,
@@ -35,7 +65,21 @@ const styles = StyleSheet.create({
   },
   photoText: {
     color: "white",
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
+    marginTop: 5,
+  },
+  listItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+    paddingHorizontal: 10,
+  },
+  listText: {
+    fontSize: 16,
+    marginLeft: 10,
   },
 });
+

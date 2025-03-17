@@ -1,30 +1,22 @@
 import React, { useRef, useEffect } from "react";
 import { FlatList, View, Image, StyleSheet, Dimensions } from "react-native";
+import { useReceitas } from "../context/ReceitasContext"; // Importando o contexto
 
-// Obtém a largura da tela para calcular o tamanho do carrossel
 const { width } = Dimensions.get("window");
+const ITEM_WIDTH = width * 0.86;
+const SPACING = 10;
+const INTERVAL = 3000;
 
-// Configurações do carrossel
-const ITEM_WIDTH = width * 0.86; // Largura de cada item
-const SPACING = 10; // Espaçamento entre os itens
-const INTERVAL = 3000; // Tempo de rolagem automática (3s)
+export default function InfinityGallery() {
+  const { receitas } = useReceitas(); // Obtendo as receitas do contexto
+  
+  // Extraindo apenas as imagens das receitas
+  const images = receitas.map((receita) => receita.imagem);
+  const infiniteImages = [...images, ...images];
 
-// Lista de imagens usando 'require' para carregar imagens locais
-const images = [
-  require("../assets/rec-bolo-chocolocate.jpg"),
-  require("../assets/rec-brigadeiro.jpg"),
-  require("../assets/rec-panqueca.jpg"),
-  require("../assets/rec-salada.jpg"),
-];
-
-// Duplicamos a lista para criar o efeito de carrossel infinito
-const infiniteImages = [...images, ...images];
-
-export default InfinityGallery = () => {
   const flatListRef = useRef(null);
   const scrollPosition = useRef(0);
 
-  // Efeito para fazer a rolagem automática
   useEffect(() => {
     const interval = setInterval(() => {
       if (flatListRef.current) {
@@ -39,7 +31,6 @@ export default InfinityGallery = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Função que detecta a rolagem e cria o efeito de loop infinito
   const handleScroll = (event) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const totalWidth = infiniteImages.length * (ITEM_WIDTH + SPACING);
@@ -73,12 +64,12 @@ export default InfinityGallery = () => {
       scrollEventThrottle={16}
     />
   );
-};
+}
 
 const styles = StyleSheet.create({
   photoContainer: {
     width: ITEM_WIDTH,
-    height: "200",
+    height: 200,
     justifyContent: "center",
     alignItems: "center",
     marginRight: SPACING,
@@ -91,5 +82,3 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
 });
-
-
