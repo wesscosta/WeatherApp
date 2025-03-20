@@ -1,13 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import InputHeader  from '../../components/inputHeader';
+import { StyleSheet, TextInput, View } from 'react-native';
 import CardMain from '../../components/cardMain';
+import { useWeather } from '../../context/WeatherContext';
 
-export default function App() {
+export default function HomeScreen() {
+  const {data} = useWeather() //pegando informações globalmente
+  {console.log(data)}
+  
   return (
     <View style={styles.container}>
-      <InputHeader/>
-      <CardMain/>
+      <TextInput style={styles.input} placeholder='Buscar cidade' placeholderTextColor={'#000'}/>
+
+      <CardMain weather={data} />
 
       <StatusBar style="auto" />
     </View>
@@ -20,5 +24,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  
+  input: {
+    backgroundColor:'rgba(217,217,217,19)',
+    width: 300,
+    borderRadius:15,
+    padding:10,
+    fontSize:18,
   },
 });
