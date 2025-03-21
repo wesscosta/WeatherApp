@@ -2,6 +2,7 @@ import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, TextInput, View } from "react-native";
 import CardMain from "../../components/cardMain";
+import CardList from "../../components/cardList";
 import { useWeather } from "../../context/WeatherContext";
 
 export default function HomeScreen() {
@@ -28,6 +29,7 @@ export default function HomeScreen() {
       />
 
       <CardMain weather={data} />
+      <CardList weather={data} style={styles.cardList}/>
 
       <StatusBar style="auto" />
     </View>
@@ -39,7 +41,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
+    paddingVertical:40,
   },
 
   input: {
@@ -49,4 +52,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
   },
+  cardList:{
+    height:200,
+  }
 });
