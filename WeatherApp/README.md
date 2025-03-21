@@ -20,7 +20,7 @@ WeatherApp é um aplicativo mobile desenvolvido em **React Native** utilizando *
 ## 🔧 Instalação e Execução
 1. Clone o repositório:
    ```sh
-   git clone https://github.com/wesscosta/reactnative-WeatherApp.git
+   git clone https://github.com/wesscosta/react-native-apps.git
    ```
 2. Acesse o diretório do projeto:
    ```sh

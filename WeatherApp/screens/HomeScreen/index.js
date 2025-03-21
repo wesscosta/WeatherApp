@@ -1,15 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, TextInput, View } from 'react-native';
-import CardMain from '../../components/cardMain';
-import { useWeather } from '../../context/WeatherContext';
+import { useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, TextInput, View } from "react-native";
+import CardMain from "../../components/cardMain";
+import { useWeather } from "../../context/WeatherContext";
 
 export default function HomeScreen() {
-  const {data} = useWeather() //pegando informações globalmente
-  {console.log(data)}
-  
+  const { data, setCity } = useWeather(); // Pegando informações globalmente
+  const [cityInput, setCityInput] = useState("");
+
+  // Função para atualizar a cidade no contexto
+  const handleSearch = () => {
+    if (cityInput.trim() !== "") {
+      setCity(cityInput); // Atualiza a cidade no contexto, disparando a requisição da API
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder='Buscar cidade' placeholderTextColor={'#000'}/>
+      <TextInput
+        style={styles.input}
+        placeholder="Buscar cidade"
+        placeholderTextColor="#000"
+        value={cityInput}
+        onChangeText={(text) => setCityInput(text)}
+        returnKeyType="search" // Define a tecla "Enter" como "Buscar"
+        onSubmitEditing={handleSearch} // Chama a função ao pressionar Enter
+      />
 
       <CardMain weather={data} />
 
@@ -21,16 +37,16 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  
+
   input: {
-    backgroundColor:'rgba(217,217,217,19)',
+    backgroundColor: "rgba(217,217,217,19)",
     width: 300,
-    borderRadius:15,
-    padding:10,
-    fontSize:18,
+    borderRadius: 15,
+    padding: 10,
+    fontSize: 18,
   },
 });
