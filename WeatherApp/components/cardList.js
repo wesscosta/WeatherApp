@@ -13,7 +13,6 @@ export default CardList = ({ weather }) => {
     <View     style={styles.container}>
       <FlatList
         horizontal
-    
         data={filteredData}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item) => item.dt.toString()} // `dt` é único e representa o timestamp da previsão

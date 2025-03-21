@@ -9,6 +9,7 @@ export default function HomeScreen() {
   const { data, setCity } = useWeather(); // Pegando informações globalmente
   const [cityInput, setCityInput] = useState("");
 
+{  console.log(data)}
   // Função para atualizar a cidade no contexto
   const handleSearch = () => {
     if (cityInput.trim() !== "") {
